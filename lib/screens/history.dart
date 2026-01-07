@@ -37,24 +37,43 @@ class _HistoryScreenState extends State<HistoryScreen> {
         onRefresh: _loadLogs,
         child: _logs.isEmpty
             ? ListView(
-                children: const [
+                children: [
+                  const SizedBox(height: 48),
                   Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(32),
-                      child: Text('No logs yet'),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Icon(Icons.history, size: 64, color: Colors.grey),
+                        SizedBox(height: 12),
+                        Text('No logs yet', style: TextStyle(fontSize: 16)),
+                      ],
                     ),
                   ),
                 ],
               )
             : ListView.separated(
                 itemCount: _logs.length,
-                separatorBuilder: (_, __) => const Divider(height: 1),
+                separatorBuilder: (_, __) => const SizedBox(height: 6),
                 itemBuilder: (context, i) {
                   final l = _logs[i];
-                  return ListTile(
-                    title: Text('${l.action} — ${l.plantId}'),
-                    subtitle: Text(l.notes ?? ''),
-                    trailing: Text('${l.when.toLocal()}'.split('.')[0]),
+                  return Card(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        child: Text(
+                          l.action.isNotEmpty ? l.action[0].toUpperCase() : '?',
+                        ),
+                      ),
+                      title: Text('${l.action} — ${l.plantId}'),
+                      subtitle: Text(l.notes ?? ''),
+                      trailing: Text(
+                        '${l.when.toLocal()}'.split('.')[0],
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ),
                   );
                 },
               ),

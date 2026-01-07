@@ -40,28 +40,49 @@ class _RemindersScreenState extends State<RemindersScreen> {
         onRefresh: _loadPlants,
         child: due.isEmpty
             ? ListView(
-                children: const [
+                children: [
+                  const SizedBox(height: 48),
                   Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(32),
-                      child: Text('No reminders'),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Icon(
+                          Icons.notifications_active,
+                          size: 64,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(height: 12),
+                        Text('No reminders', style: TextStyle(fontSize: 16)),
+                      ],
                     ),
                   ),
                 ],
               )
             : ListView.separated(
                 itemCount: due.length,
-                separatorBuilder: (_, __) => const Divider(height: 1),
+                separatorBuilder: (_, __) => const SizedBox(height: 6),
                 itemBuilder: (context, i) {
                   final r = due[i];
                   final days = r.daysUntil;
                   final whenText = days <= 0
                       ? 'Due today'
                       : 'Due in $days day${days == 1 ? '' : 's'}';
-                  return ListTile(
-                    title: Text(r.plant.name),
-                    subtitle: Text(whenText),
-                    trailing: Text('${r.dueDate.toLocal()}'.split(' ')[0]),
+                  return Card(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        child: Icon(Icons.local_florist, size: 20),
+                      ),
+                      title: Text(r.plant.name),
+                      subtitle: Text(whenText),
+                      trailing: Text(
+                        '${r.dueDate.toLocal()}'.split(' ')[0],
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ),
                   );
                 },
               ),

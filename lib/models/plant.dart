@@ -4,6 +4,7 @@ class Plant {
   String id;
   String name;
   String? species;
+  List<String>? tags;
   int wateringIntervalDays; // recommended interval
   DateTime? lastWatered;
 
@@ -11,6 +12,7 @@ class Plant {
     required this.id,
     required this.name,
     this.species,
+    this.tags,
     this.wateringIntervalDays = 7,
     this.lastWatered,
   });
@@ -23,6 +25,7 @@ class Plant {
     lastWatered: json['lastWatered'] == null
         ? null
         : DateTime.parse(json['lastWatered'] as String),
+    tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
   );
 
   Map<String, dynamic> toJson() => {
@@ -31,6 +34,7 @@ class Plant {
     'species': species,
     'wateringIntervalDays': wateringIntervalDays,
     'lastWatered': lastWatered?.toIso8601String(),
+    'tags': tags,
   };
 
   @override
