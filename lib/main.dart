@@ -9,18 +9,39 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  // Return the public State type so this API doesn't expose a private type
+  static MyAppState? of(BuildContext context) =>
+      context.findAncestorStateOfType<MyAppState>();
+
+  @override
+  MyAppState createState() => MyAppState();
+}
+
+class MyAppState extends State<MyApp> {
+  ThemeMode _mode = ThemeMode.system;
+
+  void toggleTheme() {
+    setState(() {
+      _mode = _mode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
+
+  bool get isDark => _mode == ThemeMode.dark;
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = ColorScheme.fromSeed(seedColor: Colors.green);
 
-    final base = ThemeData(colorScheme: colorScheme, useMaterial3: true);
+    // Use ThemeData.from(...) which supports the non-deprecated constructor
+    final base = ThemeData.from(colorScheme: colorScheme, useMaterial3: true);
 
     return MaterialApp(
       title: 'GreenThumb',
       debugShowCheckedModeBanner: false,
+      themeMode: _mode,
       theme: base.copyWith(
         scaffoldBackgroundColor: Colors.grey[50],
         appBarTheme: AppBarTheme(
@@ -66,6 +87,13 @@ class MyApp extends StatelessWidget {
           ),
           bodyLarge: base.textTheme.bodyLarge?.copyWith(fontSize: 16),
         ),
+      ),
+      darkTheme: ThemeData.from(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.green,
+          brightness: Brightness.dark,
+        ),
+        useMaterial3: true,
       ),
       initialRoute: '/',
       routes: {

@@ -218,7 +218,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ? 'Due today'
                           : 'Due in $daysUntil day${daysUntil == 1 ? '' : 's'}';
                       final subtitleText =
-                '${p.species ?? '—'}${p.tags != null && p.tags!.isNotEmpty ? ' • ${p.tags!.join(", ")}' : ''} • Interval: ${p.wateringIntervalDays}d • $nextText';
+                          '${p.species ?? '—'}${p.tags != null && p.tags!.isNotEmpty ? ' • ${p.tags!.join(", ")}' : ''} • Interval: ${p.wateringIntervalDays}d • $nextText';
 
                       final tileColor = u == Urgency.high
                           ? Colors.red.withAlpha((0.06 * 255).round())

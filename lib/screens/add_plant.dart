@@ -40,7 +40,11 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
       wateringIntervalDays: int.tryParse(_intervalCtrl.text) ?? 7,
       tags: _tagsCtrl.text.trim().isEmpty
           ? null
-          : _tagsCtrl.text.split(',').map((s) => s.trim()).where((s) => s.isNotEmpty).toList(),
+          : _tagsCtrl.text
+                .split(',')
+                .map((s) => s.trim())
+                .where((s) => s.isNotEmpty)
+                .toList(),
     );
 
     final raw = await _plantStorage.readList();

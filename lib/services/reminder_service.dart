@@ -8,10 +8,10 @@ class ReminderItem {
   ReminderItem({required this.plant, required this.dueDate, required this.daysUntil});
 }
 
-/// Computes reminder items for plants.
-/// A plant's next due date is lastWatered + wateringIntervalDays, or now if never watered.
+// Computes reminder items for plants.
+// A plant's next due date is lastWatered + wateringIntervalDays, or now if never watered
 class ReminderService {
-  /// Returns plants that are due within [withinDays]. If withinDays is 0, returns only today/overdue.
+  // Returns plants that are due within [withinDays]. If withinDays is 0, returns only today/overdue
   List<ReminderItem> dueSoon(List<Plant> plants, {int withinDays = 3}) {
     final now = DateTime.now();
     final results = <ReminderItem>[];
